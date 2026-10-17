@@ -1,6 +1,5 @@
 package com.mojang.herpfortress;
 
-import java.awt.event.KeyEvent;
 import java.util.*;
 
 public class Input {
@@ -48,22 +47,22 @@ public class Input {
 
 	private List<Key> keys = new ArrayList<Key>();
 
-	public Key up = new Key(this).bind(KeyEvent.VK_UP).bind(KeyEvent.VK_W);
-	public Key down = new Key(this).bind(KeyEvent.VK_DOWN).bind(KeyEvent.VK_S);
-	public Key left = new Key(this).bind(KeyEvent.VK_LEFT).bind(KeyEvent.VK_A);
-	public Key right = new Key(this).bind(KeyEvent.VK_RIGHT).bind(KeyEvent.VK_D);
+	public Key up = new Key(this).bind(Keys.VK_UP).bind(Keys.VK_W);
+	public Key down = new Key(this).bind(Keys.VK_DOWN).bind(Keys.VK_S);
+	public Key left = new Key(this).bind(Keys.VK_LEFT).bind(Keys.VK_A);
+	public Key right = new Key(this).bind(Keys.VK_RIGHT).bind(Keys.VK_D);
 
-	public Key unit1 = new Key(this).bind(KeyEvent.VK_1).bind(KeyEvent.VK_NUMPAD7).bind(KeyEvent.VK_R);
-	public Key unit2 = new Key(this).bind(KeyEvent.VK_2).bind(KeyEvent.VK_NUMPAD8).bind(KeyEvent.VK_T);
-	public Key unit3 = new Key(this).bind(KeyEvent.VK_3).bind(KeyEvent.VK_NUMPAD9).bind(KeyEvent.VK_Y);
-	public Key unit4 = new Key(this).bind(KeyEvent.VK_4).bind(KeyEvent.VK_NUMPAD4).bind(KeyEvent.VK_F);
-	public Key unit5 = new Key(this).bind(KeyEvent.VK_5).bind(KeyEvent.VK_NUMPAD5).bind(KeyEvent.VK_G);
-	public Key unit6 = new Key(this).bind(KeyEvent.VK_6).bind(KeyEvent.VK_NUMPAD6).bind(KeyEvent.VK_H);
-	public Key unit7 = new Key(this).bind(KeyEvent.VK_7).bind(KeyEvent.VK_NUMPAD1).bind(KeyEvent.VK_V);
-	public Key unit8 = new Key(this).bind(KeyEvent.VK_8).bind(KeyEvent.VK_NUMPAD2).bind(KeyEvent.VK_B);
-	public Key unit9 = new Key(this).bind(KeyEvent.VK_9).bind(KeyEvent.VK_NUMPAD3).bind(KeyEvent.VK_N);
-	public Key nextUnit = new Key(this).bind(KeyEvent.VK_E).bind(KeyEvent.VK_TAB);
-	public Key prevUnit = new Key(this).bind(KeyEvent.VK_Q);
+	public Key unit1 = new Key(this).bind(Keys.VK_1).bind(Keys.VK_NUMPAD7).bind(Keys.VK_R);
+	public Key unit2 = new Key(this).bind(Keys.VK_2).bind(Keys.VK_NUMPAD8).bind(Keys.VK_T);
+	public Key unit3 = new Key(this).bind(Keys.VK_3).bind(Keys.VK_NUMPAD9).bind(Keys.VK_Y);
+	public Key unit4 = new Key(this).bind(Keys.VK_4).bind(Keys.VK_NUMPAD4).bind(Keys.VK_F);
+	public Key unit5 = new Key(this).bind(Keys.VK_5).bind(Keys.VK_NUMPAD5).bind(Keys.VK_G);
+	public Key unit6 = new Key(this).bind(Keys.VK_6).bind(Keys.VK_NUMPAD6).bind(Keys.VK_H);
+	public Key unit7 = new Key(this).bind(Keys.VK_7).bind(Keys.VK_NUMPAD1).bind(Keys.VK_V);
+	public Key unit8 = new Key(this).bind(Keys.VK_8).bind(Keys.VK_NUMPAD2).bind(Keys.VK_B);
+	public Key unit9 = new Key(this).bind(Keys.VK_9).bind(Keys.VK_NUMPAD3).bind(Keys.VK_N);
+	public Key nextUnit = new Key(this).bind(Keys.VK_E).bind(Keys.VK_TAB);
+	public Key prevUnit = new Key(this).bind(Keys.VK_Q);
 
 	public Input() {
 	}

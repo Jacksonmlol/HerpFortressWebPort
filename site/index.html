@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Herp Fortress</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- TeaVM's WebAssembly GC loader (registers the global `TeaVM.wasmGC`) -->
+    <script src="teavm/classes.wasm-runtime.js"></script>
+  </head>
+  <body>
+    <main id="shell">
+      <canvas id="screen" width="320" height="240"></canvas>
+      <p id="hud">
+        <span id="status">Loading&hellip;</span>
+        <span id="fps"></span>
+      </p>
+    </main>
+    <script src="host.js"></script>
+  </body>
+</html>

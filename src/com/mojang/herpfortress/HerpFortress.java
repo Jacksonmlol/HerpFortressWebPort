@@ -45,7 +45,8 @@ public class HerpFortress extends Canvas implements Runnable {
 	public void init() {
 		Art.init();
 		screenImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-		screenBitmap = new Bitmap(screenImage);
+		int[] screenPixels = ((DataBufferInt) screenImage.getRaster().getDataBuffer()).getData();
+		screenBitmap = new Bitmap(WIDTH, HEIGHT, screenPixels);
 		mouse = inputHandler.updateMouseStatus(SCALE);
 
 		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "invisible"));

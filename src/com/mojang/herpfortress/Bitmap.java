@@ -1,6 +1,5 @@
 package com.mojang.herpfortress;
 
-import java.awt.image.*;
 import java.util.*;
 
 public class Bitmap {
@@ -20,12 +19,6 @@ public class Bitmap {
 		this.w = w;
 		this.h = h;
 		this.pixels = pixels;
-	}
-
-	public Bitmap(BufferedImage img) {
-		this.w = img.getWidth();
-		this.h = img.getHeight();
-		pixels = ((DataBufferInt) img.getRaster().getDataBuffer()).getData();
 	}
 
 	public void draw(Bitmap b, int xp, int yp) {

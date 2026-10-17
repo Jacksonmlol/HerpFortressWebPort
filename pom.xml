@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.mojang</groupId>
+  <artifactId>herpfortress-web</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+  <name>Herp Fortress (WebAssembly port)</name>
+
+  <!--
+    The game itself lives in src/ and is shared verbatim with the desktop build.
+    Everything the browser needs - canvas, input, artwork decoding and the game
+    loop driver - lives in platform/java/ and is compiled together with src/ by
+    TeaVM into a single WebAssembly module.
+  -->
+  <properties>
+    <teavm.version>0.16.0</teavm.version>
+    <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+    <port.sources.dir>${project.build.directory}/generated-sources/port</port.sources.dir>
+    <site.dir>${project.build.directory}/site</site.dir>
+  </properties>
+
+  <dependencies>
+    <!-- Java class library emulation used by TeaVM -->
+    <dependency>
+      <groupId>org.teavm</groupId>
+      <artifactId>teavm-classlib</artifactId>
+      <version>${teavm.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- JavaScript bindings: @JSBody / @JSExport -->
+    <dependency>
+      <groupId>org.teavm</groupId>
+      <artifactId>teavm-jso</artifactId>
+      <version>${teavm.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!--
+      Sources are gathered into one directory first, so that the web platform
+      layer can replace the desktop-only Art/InputHandler/HerpFortress classes
+      without them clashing with the originals.
+    -->
+    <sourceDirectory>${port.sources.dir}</sourceDirectory>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <executions>
+          <execution>
+            <id>gather-game-sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${port.sources.dir}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src</directory>
+                  <filtering>false</filtering>
+                  <!-- replaced by the web platform layer in platform/java -->
+                  <excludes>
+                    <exclude>**/Art.java</exclude>
+                    <exclude>**/InputHandler.java</exclude>
+                    <exclude>**/HerpFortress.java</exclude>
+                  </excludes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>gather-platform-sources</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${port.sources.dir}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>platform/java</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-site</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${site.dir}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>site</directory>
+                  <filtering>false</filtering>
+                </resource>
+                <resource>
+                  <directory>res</directory>
+                  <targetPath>res</targetPath>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.teavm</groupId>
+        <artifactId>teavm-maven-plugin</artifactId>
+        <version>${teavm.version}</version>
+        <executions>
+          <execution>
+            <id>build-wasm</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <targetDirectory>${site.dir}/teavm</targetDirectory>
+              <targetType>WEBASSEMBLY_GC</targetType>
+              <mainClass>com.mojang.herpfortress.HerpFortress</mainClass>
+              <optimizationLevel>ADVANCED</optimizationLevel>
+              <minifying>false</minifying>
+              <debugInformationGenerated>false</debugInformationGenerated>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-wasm-runtime</id>
+            <goals>
+              <goal>copy-webassembly-gc-runtime</goal>
+            </goals>
+            <configuration>
+              <targetDirectory>${site.dir}/teavm</targetDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
